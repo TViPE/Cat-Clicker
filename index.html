@@ -7,45 +7,56 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col-xs-6">
-				<h1>Cat One</h1>
-				<img src="images/catOne.jpg" alt="cat one" id="cat01">
-				<br>
-				<div class="row">
-					<div class="col-xs-6"><p>Number of Clicks: </p></div>
-					<div class="col-xs-6"><p id="counter01"></p></div>
-				</div>
-			</div>
-			<div class="col-xs-6">
-				<h1>Cat Two</h1>
-				<img src="images/catTwo.jpg" alt="cat one" id="cat02">
-				<br>
-				<div class="row">
-					<div class="col-xs-6"><p>Number of Clicks: </p></div>
-					<div class="col-xs-6"><p id="counter02"></p></div>
-				</div>
-			</div>
-		</div>
+		<div class="row" id="catRow"></div>
 	</div>
 	<footer>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(function(){
-				var counter01 = 0;
-				var counter02 = 0;
-				$('#cat01').click(function(){
-					counter01++;
-					//console.log(counter);
-					$('#counter01').html(counter01);
-				});
-				$('#cat02').click(function(){
-					counter02++;
-					//console.log(counter);
-					$('#counter02').html(counter02);
-				});
+				var cats = [
+				{catId: 1, catName: 'Cat One',imgSrc: 'images/catOne.jpg', count: 0},
+				{catId: 2, catName: 'Cat Two', imgSrc: 'images/catTwo.jpg', count: 0},
+				{catId: 3, catName: 'Cat Three', imgSrc: 'images/catTwo.jpg', count: 0},
+				{catId: 4, catName: 'Cat Four', imgSrc: 'images/catTwo.jpg', count: 0},
+				{catId: 5, catName: 'Cat Five', imgSrc: 'images/catTwo.jpg', count: 0},
+				{catId: 6, catName: 'Cat Six', imgSrc: 'images/catTwo.jpg', count: 0}
+				];
+				//console.log(cats[0].catName);
+				var catsLen = cats.length;
+				//console.log(cats)
+				//append image to dom
+				for (var i =0; i < catsLen; i++){
+					$('#catRow').append(
+						'<div class="col-xs-6">'+ 
+							'<h1>' + cats[i].catName + '</h1>' +
+							'<img src="' + cats[i].imgSrc + '" id="' + cats[i].catId +'">' +
+							'<br>' +
+							'<div class="row">' +
+								'<div class="col-xs-6"><p>Number of Clicks: </p></div>' +
+								'<div class="col-xs-6"><p id="counter' + cats[i].catId + '"></p></div>'+
+							'</div>' +
+						'</div>'
+					);
+				}
+
+				//Click count
+				for(var i = 0 ; i < catsLen; i++){
+					var count = cats[i].count;
+					//console.log(cats[i].catName);
+					//console.log(count);
+					var position = i+1;
+					$('#'+ cats[i].catId).click((function(countCopy, positionCopy){
+						return function() {
+							countCopy++;
+							//var counter = $()
+							$('#counter' + positionCopy).html(countCopy);
+							console.log(countCopy);
+						};
+					})(count, position));
+				}
 			});	
+
 		</script>
 	</footer>
 </body>
