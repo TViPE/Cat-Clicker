@@ -49,9 +49,7 @@
 						return function() {
 							countCopy++;
 							$('#counter' + positionCopy).html(countCopy);
-							count = countCopy;
-							console.log(countCopy);
-							console.log(count);
+							cats[positionCopy-1].count = countCopy;
 						};
 					})(count, position));
 				}
