@@ -13,8 +13,7 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
-			$(document).ready(function(){
-				var cats = [
+			var cats = [
 				{catId: 1, catName: 'Cat One',imgSrc: 'images/catOne.jpg', count: 0},
 				{catId: 2, catName: 'Cat Two', imgSrc: 'images/catTwo.jpg', count: 0},
 				{catId: 3, catName: 'Cat Three', imgSrc: 'images/catTwo.jpg', count: 0},
@@ -22,7 +21,9 @@
 				{catId: 5, catName: 'Cat Five', imgSrc: 'images/catTwo.jpg', count: 0},
 				{catId: 6, catName: 'Cat Six', imgSrc: 'images/catTwo.jpg', count: 0}
 				];
-				//console.log(cats[0].catName);
+
+			$(document).ready(function(){
+				
 				var catsLen = cats.length;
 				//console.log(cats)
 				//append image to dom
@@ -40,18 +41,17 @@
 					);
 				}
 
-				//Click count
+				//Click Counter
 				for(var i = 0 ; i < catsLen; i++){
 					var count = cats[i].count;
-					//console.log(cats[i].catName);
-					//console.log(count);
 					var position = i+1;
 					$('#'+ cats[i].catId).click((function(countCopy, positionCopy){
 						return function() {
 							countCopy++;
-							//var counter = $()
 							$('#counter' + positionCopy).html(countCopy);
+							count = countCopy;
 							console.log(countCopy);
+							console.log(count);
 						};
 					})(count, position));
 				}
