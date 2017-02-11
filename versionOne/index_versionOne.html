@@ -4,12 +4,70 @@
     <title>Cat Clicker</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style>
+	#header {
+		color: white;
+		background-image: url('images/headerBackground.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: 0% 50%;
+		height: 400px;
+	}
+
+	#cat-list {
+		font-size: 20px;
+	}
+	
+	</style>
 </head>
 <body>
-	<div class="container">
+	<header class="container-fluid" id="header">
+	</header>
+	<div class="container" id="wrapper">
+		<!--
 		<div class="row" id="catArrayRow"></div>
-		<div class="row" id="catRow"></div>
+			
+			<div class="col-xs-3"><button type="button" class="btn btn-primary" id="catOneButton">Cat One</button></div>
+			
+		<div class="row" id="catRow">
+			<div class="col-xs-12" ></div>
+		</div>
+		<div class="row" id="text">
+			<div class="col-xs-6">Number of Click:</div>
+			<div class="col-xs-6" id="counter"></div>
+		</div>
+		-->
+		
+		<div class="row">
+			<div class="col-xs-3 cat-list">
+				<h1>Cat List</h1>
+				<ul id="cat-list"></ul>
+			</div>
+			<div class="col-xs-9" id="cat">
+				<div class="row">
+					<div class="col-xs-12"><h3 id="cat-name"> </h3></div>
+					<div class="col-xs-12"><img src="" alt="" id="cat-img"></div>
+					<div class="col-xs-6">Number of Click</div>
+					<div class="col-xs-6" id="cat-count">img</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<button type="button" class="btn btn-primary" id="adminBtn">Admin</button>
+						</div>
+						<div class="col-xs-8">
+							<form action="" class="" id="adminForm">
+								Name: <input type="text" id="nameInput" placeholder="Enter the name"><br>
+								ImgSrc: <input type="text" id="imgSrcInput" placeholder="Enter the image source"><br>
+								Click : <input type="text" id="clickInput" placeholder="Enter the click number"><br><br>
+								<button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
+	
 	<footer>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

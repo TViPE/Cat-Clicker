@@ -1,73 +1,141 @@
+/* ======= Model ======= */
+var model = {
+	currentCat: null,
+		cats : [{
+			name: 'Meow',
+			imgSrc: 'images/catOne.jpg',
+			clickCount: 0
+		},{
+			name: 'Kitty',
+			imgSrc: 'images/catTwo.jpg',
+			clickCount: 0
+		},{
+			name: 'Tobby',
+			imgSrc: 'images/catThree.jpg',
+			clickCount: 0
+		},{
+			name: 'Lucky',
+			imgSrc: 'images/catFour.jpg',
+			clickCount: 0
+		}
+	]
+}
+/* ======= Controller ======= */
+var controller = {
+	init: function() {
+		model.currentCat = model.cats[0];
+		catListView.init();
+		catView.init();
+	},
 
-var cats = [{
-		catId: 1, 
-		catName: 'Cat One',
-		imgSrc: 'images/catOne.jpg', 
-		count: 0
-	},{
-		catId: 2,
-		catName: 'Cat Two', 
-		imgSrc: 'images/catTwo.jpg', 
-		count: 0
-	},{
-		catId: 3, 
-		catName: 'Cat Three', 
-		imgSrc: 'images/catThree.jpg', 
-		count: 0
-	}, {
-		catId: 4, 
-		catName: 'Cat Four', 
-		imgSrc: 'images/catFour.jpg', 
-		count: 0
+	getCurrentCat: function() {
+		return model.currentCat;
+	},
+
+	getCats: function() {
+		return model.cats;
+	},
+
+	setCurrentCat: function(cat){
+		model.currentCat = cat;
+	},
+
+	incrementCounter: function() {
+		model.currentCat.clickCount++;
+		catView.render();
+	},
+
+	updateInfo: function(name, imgSrc, count) {
+		model.currentCat.name = name;
+		console.log(model.currentCat.name);
+		//model.currentCat.imgSrc = imgSrc;
+		//model.currentCat.clickCount = count;
+		catView.render();
 	}
-];
-
-var catsLen = cats.length;
-
-var controller = function(){
-
 }
+/* ======= View ======= */
 
-var view = function(){
-	//init cat array
-	cats.forEach(function(catsObj){
-		$('#catArrayRow').append(
-			'<div class="col-xs-3">'+
-				'<button type="button" class="btn btn-primary">' + catsObl.catName + '</button>'
-			'</div>'
-		)
+var catView = {
+	init: function() {
+		this.catElem = document.getElementById('cat');
+		this.catNameElem = document.getElementById('cat-name');
+		this.catImageElem = document.getElementById('cat-img');
+		this.countElem = document.getElementById('cat-count');
+		this.adminBtn = document.getElementById('adminBtn');
+		this.adminForm = document.getElementById('adminForm');
+		this.formVisibility = true;
+		this.nameInputVal = document.getElementById('nameInput').value;
+		this.imgSrcInputVal = document.getElementById('imgSrcInput').value;
+		this.clickInput = document.getElementById('clickInput').value;
+		this.saveBtn = document.getElementById('saveBtn');
+
+		/*
+		this.catImageElem.click(function(){
+			controller.incrementCounter();
+		});
+		*/
+		this.catImageElem.addEventListener('click', function(){
+            controller.incrementCounter();
+        });
+
+        this.saveBtn.addEventListener('click', function(){
+        	controller.updateInfo(this.nameInputVal, this.imgSrcInputVal, this.clickInput);
+        });
+
+		this.render();
+	},
+
+	render: function() {
+		var currentCat = controller.getCurrentCat();
+		this.countElem.textContent = currentCat.clickCount;
+		this.catNameElem.textContent = currentCat.name;
+		this.catImageElem.src = currentCat.imgSrc;
+		this.adminBtn.addEventListener('click', function(e){
+			if(this.formVisibility){
+				document.getElementById('adminForm').style.display = "none";
+				this.formVisibility = false;
+			} else {
+				document.getElementById('adminForm').style.display = "block";
+				this.formVisibility = true;
+			}	
+        });
+		
 	}
 }
 
-/*		
-var catsLen = cats.length;
-//append image to dom
-for (var i =0; i < catsLen; i++){
-	$('#catRow').append(
-		'<div class="col-xs-6">'+ 
-			'<h1>' + cats[i].catName + '</h1>' +
-			'<img src="' + cats[i].imgSrc + '" id="' + cats[i].catId +'">' +
-			'<br>' +
-			'<div class="row">' +
-				'<div class="col-xs-6"><p>Number of Clicks: </p></div>' +
-				'<div class="col-xs-6"><p id="counter' + cats[i].catId + '"></p></div>'+
-			'</div>' +
-		'</div>'
-	);
+var catListView = {
+	init: function() {
+		this.catListElem = document.getElementById('cat-list');
+		this.render();
+	},
+
+	render: function() {
+		var cat, elem, i;
+		var cats = controller.getCats();
+
+		for (i=0; i< cats.length; i++){
+			cat = cats[i];
+			elem =document.createElement('li');
+			elem.textContent = cat.name;
+
+			/*
+			elem.click((function(catCopy){
+				return function(){
+					controller.setCurrentCat(catCopy);
+					catView.render();
+				};
+			})(cat));
+			*/ 
+			elem.addEventListener('click', (function(catCopy) {
+                return function() {
+                    controller.setCurrentCat(catCopy);
+                    catView.render();
+                };
+            })(cat));
+
+			this.catListElem.appendChild(elem);
+		}
+	}
 }
 
-//Click Counter
-for(var i = 0 ; i < catsLen; i++){
-	var count = cats[i].count;
-	var position = i+1;
-	$('#'+ cats[i].catId).click((function(countCopy, positionCopy){
-		return function() {
-			countCopy++;
-			$('#counter' + positionCopy).html(countCopy);
-			count = countCopy;
-			console.log(countCopy);
-			console.log(count);
-		};
-	})(count, position));
-}
-*/
+controller.init();
