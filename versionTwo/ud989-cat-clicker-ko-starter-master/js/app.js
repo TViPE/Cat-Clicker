@@ -1,6 +1,34 @@
-var Cat = function() {
-	this.clickCount =  ko.observable(0);
-	this.name = ko.observable('Tabby');
+
+var initialCats = [{
+	clickCount: 0,
+	name: 'Tabby',
+	imgSrc: "img/22252709_010df3379e_z.jpg",
+	nicknames: ["Tabtab","T-Bone","Mr.T", "Tabitha Tab Tabby Catty Cat"]
+},{
+	clickCount: 0,
+	name: 'Tiger',
+	imgSrc: 'img/434164568_fea0ad4013_z.jpg',
+	nicknames: ['Titi']
+},{
+	clickCount: 0,
+	name: 'Scaredy',
+	imgSrc: 'img/1413379559_412a540d29_z.jpg',
+	nicknames: ['Scary']
+},{
+	clickCount: 0,
+	name: 'Shadow',
+	imgSrc: 'img/4154543904_6e2428c421_z.jpg',
+	nicknames: ['Sony']
+},{
+	clickCount: 0,
+	name: 'Nina',
+	imgSrc: 'img/9648464288_2516b35537_z.jpg',
+	nicknames: ['Ninja']
+}];
+
+var Cat = function(data) {
+	this.clickCount =  ko.observable(data.clickCount);
+	this.name = ko.observable(data.name);
 	this.title = ko.computed(function(){
 		var title;
 		var clicks = this.clickCount();
@@ -15,17 +43,29 @@ var Cat = function() {
 		} else {
 			title = 'Ninja'
 		}
-		return title
+		return title;
 	}, this);
-	this.imgSrc = ko.observable('img/22252709_010df3379e_z.jpg');
-	this.nicknames = ko.observableArray(["Tabtab","T-Bone","Mr.T", "Tabitha Tab Tabby Catty Cat"]);
-}
+	this.imgSrc = ko.observable(data.imgSrc);
+	this.nicknames = ko.observableArray(data.nicknames);
+};
 
 var ViewModel = function() {
-	this.currentCat = ko.observable(new Cat());
+	var self = this;
+
+	this.catList = ko.observableArray([]);
+
+	initialCats.forEach(function(catItem){
+		self.catList.push(new Cat(catItem));
+	});
+
+	this.currentCat = ko.observable(this.catList()[0]);
+
 	this.incrementCounter = function(){
-		this.currentCat().clickCount(this.currentCat().clickCount() + 1);
-	}
+		self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+	};
+	this.setCat = function(clickedCat){
+		self.currentCat(clickedCat);
+	};
 
 	
 }
